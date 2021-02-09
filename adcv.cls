@@ -388,7 +388,7 @@
   \begin{tikzpicture}[remember picture, overlay]%
     \node [rectangle, fill=headerfill, minimum width=\paperwidth, minimum height=8em, anchor=north] (box) at (current page.north) {};%
     \node [text=headertext, anchor=center] (name) at (box) {%
-      {\Huge\thinheader\adcv@firstname~\regularheader\adcv@lastname\thinheader,~\adcv@degree}%
+      {\Huge\thinheader\adcv@firstname~\regularheader\adcv@lastname\thinheader~\adcv@degree}%
     };%
     \node [text=headertext, anchor=north] at (name.south) {%
       \Large\thinheader\adcv@title%
