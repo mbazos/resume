@@ -351,7 +351,7 @@
 
 \RequirePackage{tikz}
 
-\newcommand*{\adcvname}[3]{\def\adcv@firstname{#1}\def\adcv@lastname{#2}\def\adcv@degree{#3}}
+\newcommand*{\adcvname}[2]{\def\adcv@firstname{#1}\def\adcv@lastname{#2}}
 \newcommand*{\adcvtitle}[1]{\def\adcv@title{#1}}
 \newcommand*{\adcvaddress}[4]{\def\adcv@street{#1}\def\adcv@postalcode{#2}\def\adcv@locality{#3}\def\adcv@country{#4}}
 \newcommand*{\adcvphone}[1]{\def\adcv@phone{#1}}
