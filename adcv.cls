@@ -351,7 +351,7 @@
 
 \RequirePackage{tikz}
 
-\newcommand*{\adcvname}[2]{\def\adcv@firstname{#1}\def\adcv@lastname{#2}}
+\newcommand*{\adcvname}[3]{\def\adcv@firstname{#1}\def\adcv@lastname{#2}\def\adcv@degree{#3}}
 \newcommand*{\adcvtitle}[1]{\def\adcv@title{#1}}
 \newcommand*{\adcvaddress}[4]{\def\adcv@street{#1}\def\adcv@postalcode{#2}\def\adcv@locality{#3}\def\adcv@country{#4}}
 \newcommand*{\adcvphone}[1]{\def\adcv@phone{#1}}
@@ -388,7 +388,7 @@
   \begin{tikzpicture}[remember picture, overlay]%
     \node [rectangle, fill=headerfill, minimum width=\paperwidth, minimum height=8em, anchor=north] (box) at (current page.north) {};%
     \node [text=headertext, anchor=center] (name) at (box) {%
-      {\Huge\thinheader\adcv@firstname~\regularheader\adcv@lastname\thinheader~\adcv@degree}%
+      {\Huge\thinheader\adcv@firstname~\regularheader\adcv@lastname\thinheader,~\adcv@degree}%
     };%
     \node [text=headertext, anchor=north] at (name.south) {%
       \Large\thinheader\adcv@title%
