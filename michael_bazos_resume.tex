@@ -1,192 +1,161 @@
-% Change the size of the paper your CV will be printed on
-% by entering either a4paper or letterpaper here.
-\documentclass[a4paper]{ReadableCV}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is a modified ONE COLUMN version of
+% the following template:
+% 
+% Deedy - One Page Two Column Resume
+% LaTeX Template
+% Version 1.1 (30/4/2014)
+%
+% Original author:
+% Debarghya Das (http://debarghyadas.com)
+%
+% Original repository:
+% https://github.com/deedydas/Deedy-Resume
+%
+% IMPORTANT: THIS TEMPLATE NEEDS TO BE COMPILED WITH XeLaTeX
+%
+% This template uses several fonts not included with Windows/Linux by
+% default. If you get compilation errors saying a font is missing, find the line
+% on which the font is used and either change it to a font included with your
+% operating system or comment the line out to use the default font.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% TODO:
+% 1. Integrate biber/bibtex for article citation under publications.
+% 2. Figure out a smoother way for the document to flow onto the next page.
+% 3. Add styling information for a "Projects/Hacks" section.
+% 4. Add location/address information
+% 5. Merge OpenFont and MacFonts as a single sty with options.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% CHANGELOG:
+% v1.1:
+% 1. Fixed several compilation bugs with \renewcommand
+% 2. Got Open-source fonts (Windows/Linux support)
+% 3. Added Last Updated
+% 4. Move Title styling into .sty
+% 5. Commented .sty file.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Known Issues:
+% 1. Overflows onto second page if any column's contents are more than the
+% vertical limit
+% 2. Hacky space on the first bullet point on the second column.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Set color of body text
-\color{black}
+\documentclass[]{deedy-resume-openfont}
+
 
 \begin{document}
-	
-% Set page colour using X11names colour definitions
-\setPageColour{white}
 
-% Set header details being aligned to the right or left
-% If an image is displayed it will be shown on the
-% opposite side to what is set here.
-\setHeaderAlignment{left}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     LAST UPDATED DATE
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lastupdated
 
-% Set colour of all headings, header highlights
-\setHeadingColours{SlateGray3}
-
-% Set image file to be displayed in header
-% If left blank no image is displayed
-%\setImage{profilepic.jpg}
-
-% If image not being displayed then user can
-% move contact details to opposite side of
-% page to name and jobtitle.
-% Use either opposite or below
-\setContactLocation{opposite}
-
-% Set up information needed for header.
-% If you do not want to include certain
-% information use {} instead. 
-\setYourName{Jobseeker}
-\setYourJobTitle{Job title}
-\setYourMobileNo{Mobile phone}
-\setYourHomeNo{Home phone}
-\setYourEmailAddr{Email address}
-\setYourWebAddr{Web address}
-
-% Display header information 
-\showHeader
-
-% Set up whether section headings are on the left or right
-\setSectionAlignment{left}
-
-% Creates a new section title / heading
-\newHeading{Personal Profile}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-\newHeading{Core Skills}
-
-% Add up to nine core skills. If they are
-% all not needed use {} instead.
-\addSkills{Skill one}
-		  {Skill two}
-		  {Skill three}
-		  {Skill four}
-		  {Skill five}
-		  {Skill six}
-		  {Skill seven}
-		  {Skill eight}
-		  {Skill nine}
-		  
-\newHeading{Career Summary}
-
-% Set up whether job title or company printed first
-% Either use JobFirst or CompanyFirst
-\setJobCompanyOrder{JobFirst}
-
-% This displays the whole of the role information
-% including dates [1], job title [2],
-% company name [3] and role summary [4]
-% If a full history is required use \newrole and \roleAchievements
-% If only a brief description needed then just use \newrole
-\newRole{2018 -- present}
-        {Job title}
-        {Company name}
-        {A short summary broadly detailing what the role involves. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     TITLE NAME
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\roleAchievements{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
+\namesection{Firstname}{Lastname}{ \urlstyle{same}\url{http://example.com} \\
+\href{mailto:user@example.com}{user@example.com} | 123.456.7890
+}
 
-\newRole{2007 -- 2018}
-{Job title}
-{Company name}
-{A short summary broadly detailing what the role involves. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
+\href{http://linkedin.com/in/12346}{http://linkedin.com/in/12346}
 
-\roleAchievements{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
+\begin{center}
+\huge\color{subheadings}\custombold{LIFELONG LEARNER}
+\end{center}
 
-\newRole{1999 -- 2006}
-{Job title}
-{Company name}
-{A short summary broadly detailing what the role involves. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
+\section{Experience}
 
-\roleAchievements{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
+\runsubsection{Coursera}
+\descript{| KPCB Fellow + Software Engineering Intern }
+\location{Expected June 2014 – Sep 2014 | Mountain View, CA}
+\vspace{\topsep} % Hacky fix for awkward extra vertical space
+\begin{tightemize}
+\item 52 out of 2500 applicants chosen to be a KPCB Fellow 2014.
+\end{tightemize}
+\sectionsep
 
-\newRole{2003 -- 2006}{Job title}{Company name}{A short summary broadly detailing what the role involves. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-\newRole{2002 -- 2003}{Job title}{Company name}{A short summary broadly detailing what the role involves. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
-\newRole{2001 -- 2003}{Job title}{Company name}{A short summary broadly detailing what the role involves. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia gravida pellentesque.}
+\runsubsection{Google}
+\descript{| Software Engineering Intern }
+\location{May 2013 – Aug 2013 | Mountain View, CA}
+\begin{tightemize}
+\item Worked on the YouTube Captions team in primarily vanilla Javascript and Python to plan, design and develop the full stack implementation of a new framework to add and edit Automatic Speech Recognition captions.
+\item Created a backbone.js-like framework for the Captions editor.
+\item All code was reviewed, perfected, and pushed to production.
+\end{tightemize}
+\sectionsep
 
-% move, duplicate, delete or comment out the following line if necessary
-\newpage
+\runsubsection{Phabricator}
+\descript{| Open Source Contributor \& Team Leader}
+\location{Jan 2013 – May 2013 | Palo Alto, CA \& Ithaca, NY}
+\begin{tightemize}
+\item Phabricator is used daily by Facebook, Dropbox, Quora, Asana and more.
+\item I created the Meme generator, the entire Lipsum application, ported Tokens to different apps, fixed many bugs and more in PHP and Shell.
+\item Led a team from MIT, Cornell, IC London and UHelsinki for the project.
+\end{tightemize}
+\sectionsep
 
-% This is training you have done in your own time
-\newHeading{Personal Development}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     RESEARCH
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newCourse{2019}
-{Course title}
-{Awarding body}{}
+\section{Research}
+\runsubsection{Cornell Robot Learning Lab}
+\descript{| Head Undergrad Research}
+\location{Jan 2014 – Present | Ithaca, NY}
+Worked with \textbf{\href{http://www.cs.cornell.edu/~ashesh/}{Ashesh Jain}} and \textbf{\href{http://www.cs.cornell.edu/~asaxena/}{Prof Ashutosh Saxena}} to create \textbf{PlanIt}, a tool which  learns from large scale user preference feedback to plan robot trajectories in human environments.  Publication submitted.
+\sectionsep
 
-\newCourse{2019}
-{Course title}
-{Awarding body}{}
+\runsubsection{Cornell Phonetics Lab}
+\descript{| Head Undergraduate Researcher}
+\location{Mar 2012 – May 2013 | Ithaca, NY}
+Lead the development of \textbf{QuickTongue}, the first ever breakthrough tongue-controlled game with \textbf{\href{http://conf.ling.cornell.edu/~tilsen/}{Prof Sam Tilsen}} to aid in Linguistics research. Publication submitted.
+\sectionsep
 
-\newCourse{2019}
-{Course title}
-{Awarding body}{}
+\section{Education}
+\runsubsection{Cornell University}
+\descript{| MEng in Computer Science}
+\location{Expected Dec 2014 | Ithaca, NY \textbullet{} Cum. GPA: N/A}
+\sectionsep
 
-% School education
-\newHeading{Education}
-         
-\newCourse{2000 - 2002}{Course title}{Awarding body}{}
-\newCourse{1996 - 1998}{Course title}{Awarding body}{}
-\newCourse{1994 - 1996}{Course title}{Awarding body}{}
-\newCourse{1989 - 1994}{Course title}{Awarding body}{}
-          
-\clearpage
- 
-% Anything below creates a letter
- 
-% Displays same header as on CV
-\showHeader
+\runsubsection{Cornell University}
+\descript{| BS in Computer Science}
+\location{Conc. in Software Engineering,
+College of Engineering | Expected May 2014 | Ithaca, NY}
+Dean's List (All Semesters) \textbullet{}
+Cum. GPA: 3.92 / 4.0 \textbullet{}
+Major GPA: 3.94 / 4.0
+\sectionsep
 
+\section{Languages}
+\begin{minipage}[t]{.6\textwidth}
+\subsection{Programming}
+\location{Over 5000 lines:}
+Java \textbullet{}   Shell \textbullet{} JavaScript \textbullet{} Matlab \textbullet{}
+OCaml \textbullet{} Python \textbullet{} Rails \textbullet{} \LaTeX\ \\ 
+\location{Over 1000 lines:}
+C \textbullet{} C++ \textbullet{} CSS \textbullet{} PHP \textbullet{} Assembly \\
+\location{Familiar:}
+AS3 \textbullet{} iOS \textbullet{} Android \textbullet{} MySQL
+\sectionsep
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.35\textwidth}
+\subsection{Spoken \& Written}
+\location{Native fluency:} English, Spanish\\
+\location{Reading fluency:} Chinese, Japanese\\
+\end{minipage}
 
-
-% Name and address must be present but
-% job title is optional
-\setRecpName{Mr Deeds}
-\setRecpJobTitle{Hiring Manager}
-\setRecpRoad{BigCorp Road}
-\setRecpTown{BigCorp Town}
-\setRecpCity{BigCorp City}
-\setRecpPostcode{X12 3YZ}
-
-\makeLetter
-
-% Do not delete \recpname unless you want to call the
-% recipient something other than the name defined above.
-Dear \recpname,
-
-% Do not remove the following line
-\bigskip
-
-Please find enclosed my CV in application for the post advertised in the [insert place advertised] on [date advert seen].
-
-The nature of my [qualification] has prepared me for this position. It involved a great deal of independent research, requiring initiative, self-motivation and a wide range of skills. One of my courses, [insert course], an understanding of the [insert sector] industry was essential. I found this subject very interesting.
-
-I am a fast and accurate writer, with a keen eye for detail and I should be very grateful for the opportunity to progress. I am able to take on the responsibility of this position immediately, and have the enthusiasm and determination to ensure that I make a success of it.
-
-Thank you for taking the time to consider this application and I look forward to hearing from you in the near future.
-
-% Do not remove the following line
-\bigskip
-
-% comment, or uncomment, whichever you prefer to use
-Yours sincerely, % if the opening is "Dear Mr(s) Doe,"
-%Yours faithfully, % if the opening is "Dear Sir or Madam,"
-
-% Insert name of image with your signature
-% If paper colour is not white best to use PNG
-% with transparency.
-%\closeletter{sig.png}
-\closeletter
-
-\end{document}
+\end{document}  \documentclass[]{article}
