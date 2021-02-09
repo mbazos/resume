@@ -1,9 +1,10 @@
-on: 
-  workflow_dispatch:
-    inputs:
-      version: '1.0'
 name: Build & Release LaTeX document
 
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
 jobs:
   build_latex:
     runs-on: ubuntu-latest
