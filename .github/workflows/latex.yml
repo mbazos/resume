@@ -15,7 +15,8 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: michael_bazos_resume.tex
-          compiler: xelatex
+          #compiler: xelatex
+          latexmk_use_xelatex: true
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
