@@ -1,5 +1,8 @@
-name: Build LaTeX document
-on: [push]
+name: Build & Release LaTeX document
+on: 
+  workflow_dispatch:
+    inputs:
+      version: '1.0'
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -17,8 +20,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.event.inputs.version }}
+          release_name: Release ${{ github.event.inputs.version }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
