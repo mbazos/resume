@@ -375,9 +375,9 @@
 \newcommand*{\placeicon}{\includegraphics[height=0.75em]{place.pdf}}
 
 \ifonline
-  \def\adcv@address{\placeicon~\adcv@locality,~\adcv@country}
+  \def\adcv@address{\placeicon~\adcv@street,~\adcv@postalcode~\adcv@locality,~\adcv@country}
   \def\adcv@email{\envelopeicon~{\linktext\adcv@emaillocal\aticon\adcv@emaildomainsecond\doticon\adcv@emaildomaintop}}
-  \def\adcv@telephone{}
+  \def\adcv@telephone{\phoneicon~\adcv@phone}
 \else
   \def\adcv@address{\placeicon~\adcv@street,~\adcv@postalcode~\adcv@locality,~\adcv@country}
   \def\adcv@email{\envelopeicon~\href{mailto:\adcv@emaillocal @\adcv@emaildomainsecond.\adcv@emaildomaintop}{\adcv@emaillocal @\adcv@emaildomainsecond.\adcv@emaildomaintop}}
@@ -409,7 +409,7 @@
 
   \begin{center}%
     \ifonline%
-      \adcv@email~\adcv@website%
+      \adcv@email~\adcv@website~\adcv@telephone%
 
       \adcv@address%
     \else%
