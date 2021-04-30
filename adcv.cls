@@ -253,7 +253,7 @@
 \newlength\adcv@langcol
 
 \setlength{\adcv@leftcol}{11em}
-\setlength{\adcv@rightcol}{9em}
+\setlength{\adcv@rightcol}{10em}
 \setlength{\adcv@colsep}{1em}
 \setlength{\adcv@centercol}{\textwidth}
 \addtolength{\adcv@centercol}{-\adcv@leftcol}
