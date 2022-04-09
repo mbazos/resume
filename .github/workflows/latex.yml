@@ -1,14 +1,16 @@
 name: Build & Release LaTeX document
 
 on:
+  push:
   workflow_dispatch:
-    inputs:
-      version:
-        required: true
+
 jobs:
   build_latex:
     runs-on: ubuntu-latest
     steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%mm')"
       - name: Set up Git repository
         uses: actions/checkout@v2
       - name: Compile LaTeX document
@@ -23,8 +25,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.event.inputs.version }}
-          release_name: Release ${{ github.event.inputs.version }}
+          tag_name: ${{ steps.date.outputs.date }}
+          release_name: Release ${{ steps.date.outputs.date }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
