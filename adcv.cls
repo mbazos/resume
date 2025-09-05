@@ -341,7 +341,7 @@
 \newcommand*{\lighttext}{\addfontfeature{Color=lighttext}}
 \newcommand*{\linktext}{\addfontfeature{Color=linktext}}
 
-\def\@sectioncolor#1#2#3{{\addfontfeature{Color=linktext} #1#2#3}}
+\def\@sectioncolor#1 {{\addfontfeature{Color=linktext}#1}}
 \def\HyColor@@@@UseColor#1\@nil{\addfontfeatures{Color=linktext}}
 
 \renewcommand{\section}[1]{\vspace{.5\baselineskip}{\Large\bfseries\@sectioncolor #1}}
