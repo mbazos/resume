@@ -14,11 +14,12 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
       - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v2
+        uses: xu-cheng/latex-action@v4
         with:
           root_file: michael_bazos_resume.tex
           #compiler: xelatex
           latexmk_use_xelatex: true
+          continue_on_error: true
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
