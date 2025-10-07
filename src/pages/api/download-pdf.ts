@@ -18,7 +18,7 @@ export const GET: APIRoute = async ({ url }) => {
 
     await browser.close();
 
-    return new Response(pdf, {
+    return new Response(pdf as unknown as BodyInit, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
