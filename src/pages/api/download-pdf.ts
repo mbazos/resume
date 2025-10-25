@@ -14,11 +14,13 @@ export const GET: APIRoute = async ({ url }) => {
     const pdf = await page.pdf({
       format: "A4",
       scale: 0.8,
+      printBackground: true,
     });
 
     await browser.close();
 
-    return new Response(pdf as unknown as BodyInit, {
+    // Convert Buffer to Uint8Array for proper Response handling
+    return new Response(new Uint8Array(pdf), {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
