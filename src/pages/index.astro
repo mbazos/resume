@@ -2,6 +2,28 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import DownloadButton from "../components/DownloadButton.astro";
+
+// Calculate duration for current position (October 2025 - Present)
+function calculateDuration(startDate: string): string {
+  const start = new Date(startDate);
+  const now = new Date();
+
+  let months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+  const days = now.getDate() - start.getDate();
+
+  if (days < 0) {
+    months--;
+  }
+
+  if (months >= 12) {
+    const years = months / 12;
+    return `${years.toFixed(1)} years`;
+  } else {
+    return `${months} months`;
+  }
+}
+
+const currentDuration = calculateDuration("2025-10-01");
 ---
 
 <BaseLayout
@@ -232,7 +254,7 @@ import DownloadButton from "../components/DownloadButton.astro";
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >October 2025 - Present</span
+            >October 2025 - Present ({currentDuration})</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -269,7 +291,7 @@ import DownloadButton from "../components/DownloadButton.astro";
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >March 2024 - October 2025</span
+            >March 2024 - October 2025 (1.6 years)</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -353,7 +375,7 @@ import DownloadButton from "../components/DownloadButton.astro";
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >March 2018 - March 2024</span
+            >March 2018 - March 2024 (6 years)</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -404,7 +426,7 @@ import DownloadButton from "../components/DownloadButton.astro";
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >March 2016 - March 2018</span
+            >March 2016 - March 2018 (2 years)</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -459,7 +481,7 @@ import DownloadButton from "../components/DownloadButton.astro";
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >April 2013 - March 2016</span
+            >April 2013 - March 2016 (2.9 years)</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -535,7 +557,7 @@ import DownloadButton from "../components/DownloadButton.astro";
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >February 2011 - April 2013</span
+            >February 2011 - April 2013 (2.2 years)</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -576,7 +598,7 @@ import DownloadButton from "../components/DownloadButton.astro";
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >January 2008 - February 2011</span
+            >January 2008 - February 2011 (3.1 years)</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -622,7 +644,7 @@ import DownloadButton from "../components/DownloadButton.astro";
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >January 2006 - January 2008</span
+            >January 2006 - January 2008 (2 years)</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
