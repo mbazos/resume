@@ -2,28 +2,6 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import DownloadButton from "../components/DownloadButton.astro";
-
-// Calculate duration for current position (October 2025 - Present)
-function calculateDuration(startDate: string): string {
-  const start = new Date(startDate);
-  const now = new Date();
-
-  let months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
-  const days = now.getDate() - start.getDate();
-
-  if (days < 0) {
-    months--;
-  }
-
-  if (months >= 12) {
-    const years = months / 12;
-    return `${years.toFixed(1)} years`;
-  } else {
-    return `${months} months`;
-  }
-}
-
-const currentDuration = calculateDuration("2025-10-01");
 ---
 
 <BaseLayout
@@ -147,14 +125,7 @@ const currentDuration = calculateDuration("2025-10-01");
     <!-- Introduction -->
     <section class="mb-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
       <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-        A results-driven Software Architect and Engineering Manager with
-        extensive experience leading diverse engineering teams including backend,
-        frontend, native app, and test engineers. Specializing in Java, cloud
-        technologies, and building scalable, high-performance APIs, with a proven
-        ability to deliver complex projects while championing modern AI-assisted
-        development practices. Actively exploring LLM-powered workflows, custom
-        MCP servers, and agentic coding patterns to enhance team productivity and
-        code quality.
+        Results-driven Software Architect and Engineering Manager with extensive experience leading diverse engineering teams to deliver scalable, high-performance systems. Expert in Java, cloud technologies, and modern development practices, with a proven track record of driving business growth and technical innovation.
       </p>
     </section>
 
@@ -164,14 +135,6 @@ const currentDuration = calculateDuration("2025-10-01");
         Summary of Qualifications
       </h2>
       <ul class="space-y-2 text-gray-700 dark:text-gray-300">
-        <li class="flex gap-2">
-          <span class="text-orange-600 dark:text-orange-400">•</span>
-          <span
-            >Building custom MCP servers and implementing agentic AI workflows to
-            leverage LLMs for enhanced development productivity and code
-            quality</span
-          >
-        </li>
         <li class="flex gap-2">
           <span class="text-orange-600 dark:text-orange-400">•</span>
           <span
@@ -191,23 +154,17 @@ const currentDuration = calculateDuration("2025-10-01");
         <li class="flex gap-2">
           <span class="text-orange-600 dark:text-orange-400">•</span>
           <span
+            >Championing AI-assisted development practices and building custom
+            tooling to enhance team productivity, including organizing internal
+            AI hackathons focused on customer-facing applications</span
+          >
+        </li>
+        <li class="flex gap-2">
+          <span class="text-orange-600 dark:text-orange-400">•</span>
+          <span
             >Deep expertise in Java and JVM technologies, with proven ability to
             rapidly adopt emerging technologies from cloud-native architectures
             (Kubernetes, Docker) to machine learning integration</span
-          >
-        </li>
-        <li class="flex gap-2">
-          <span class="text-orange-600 dark:text-orange-400">•</span>
-          <span
-            >Excellent communicator and team player who actively mentors other
-            engineers</span
-          >
-        </li>
-        <li class="flex gap-2">
-          <span class="text-orange-600 dark:text-orange-400">•</span>
-          <span
-            >Skilled in creating comprehensive technical documentation,
-            including design documents and architectural diagrams</span
           >
         </li>
         <li class="flex gap-2">
@@ -221,8 +178,17 @@ const currentDuration = calculateDuration("2025-10-01");
         <li class="flex gap-2">
           <span class="text-orange-600 dark:text-orange-400">•</span>
           <span
-            >Leads the JVM developer group at Priceline, fostering collaboration
-            across teams on JVM technologies</span
+            >Lead the JVM developer group at Priceline, fostering collaboration
+            and knowledge sharing across teams on JVM technologies and best
+            practices</span
+          >
+        </li>
+        <li class="flex gap-2">
+          <span class="text-orange-600 dark:text-orange-400">•</span>
+          <span
+            >Strong technical communicator who actively mentors engineers and
+            creates comprehensive documentation including design documents and
+            architectural diagrams</span
           >
         </li>
         <li class="flex gap-2">
@@ -254,7 +220,7 @@ const currentDuration = calculateDuration("2025-10-01");
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >October 2025 - Present ({currentDuration})</span
+            >October 2025 - Present</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -291,7 +257,7 @@ const currentDuration = calculateDuration("2025-10-01");
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >March 2024 - October 2025 (1.6 years)</span
+            >March 2024 - October 2025 (1.7 years)</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -481,7 +447,7 @@ const currentDuration = calculateDuration("2025-10-01");
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >April 2013 - March 2016 (2.9 years)</span
+            >April 2013 - March 2016 (3 years)</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -557,7 +523,7 @@ const currentDuration = calculateDuration("2025-10-01");
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >February 2011 - April 2013 (2.2 years)</span
+            >February 2011 - April 2013 (2 years)</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -598,7 +564,7 @@ const currentDuration = calculateDuration("2025-10-01");
             </p>
           </div>
           <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >January 2008 - February 2011 (3.1 years)</span
+            >January 2008 - February 2011 (3 years)</span
           >
         </div>
         <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
@@ -708,7 +674,7 @@ const currentDuration = calculateDuration("2025-10-01");
           </li>
           <li class="flex gap-2">
             <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span>SHU Football NCAA Division I–AA/FCS 2002-2004</span>
+            <span>SHU Football NCAA Division I–AA/FCS 2002-2005</span>
           </li>
           <li class="flex gap-2">
             <span class="text-orange-600 dark:text-orange-400">•</span>
@@ -736,9 +702,9 @@ const currentDuration = calculateDuration("2025-10-01");
             >
           </h3>
           <p class="text-gray-700 dark:text-gray-300 mb-2">
-            Active volunteer firefighter with certifications in Fire Fighter I, HazMat Operations, and HazMat Awareness.
-            Lead the technology committee, managing the organization's Microsoft 365 deployment, physical infrastructure including
-            servers and network switches. Built and maintain the department website at <a
+            Active volunteer firefighter certified in Fire Fighter I, HazMat Operations, and HazMat Awareness.
+            Lead the technology committee managing Microsoft 365 deployment, servers, and network infrastructure.
+            Built and maintain the department website at <a
               href="https://evfc1.com"
               target="_blank"
               rel="noopener noreferrer"
@@ -785,42 +751,10 @@ const currentDuration = calculateDuration("2025-10-01");
             >
           </h3>
           <p class="text-gray-700 dark:text-gray-300">
-            Developed a free application that will screen-scrape an OWA 2007
-            website so you can check your mail natively on your Android device.
-            This was built because many corporate environments don't allow you
-            to setup your email on your personal phone. This app generated over
-            100k+ downloads.
-          </p>
-        </div>
-
-        <!-- Binary Clock Wallpaper -->
-        <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Binary Clock Wallpaper <span
-              class="text-sm font-normal text-gray-600 dark:text-gray-400"
-              >(2012)</span
-            >
-          </h3>
-          <p class="text-gray-700 dark:text-gray-300 mb-2">
-            A simple, efficient live wallpaper for android. This was my first
-            published app to the market.
-          </p>
-        </div>
-
-        <!-- Disposable Camera App -->
-        <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Disposable Camera App <span
-              class="text-sm font-normal text-gray-600 dark:text-gray-400"
-              >(2012)</span
-            >
-          </h3>
-          <p class="text-gray-700 dark:text-gray-300">
-            Built for my wedding developed a disposable camera application that
-            allows users to take pictures that instantly get uploaded to my
-            personal website. To prevent bogus photos from people not at the
-            wedding I used geocoding to ensure they were within an appropriate
-            distance of the venue.
+            Developed a free Android application that screen-scrapes OWA 2007
+            websites to check email natively on Android devices.
+            Built to solve the common corporate policy of not allowing personal
+            devices to connect to company email. Generated over 100k+ downloads.
           </p>
         </div>
       </div>
@@ -833,19 +767,7 @@ const currentDuration = calculateDuration("2025-10-01");
       </h3>
       <div class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
         <p>
-          This modern resume website was built using AI-assisted development
-          workflows. I used an LLM to help create a detailed implementation plan
-          (<a
-            href="https://github.com/mbazos/resume/blob/master/PLAN.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-orange-600 dark:text-orange-400 hover:underline"
-            >PLAN.md</a
-          >), which was then used with Claude Code to transform a PDF of my
-          original resume into this modern, responsive website. This project
-          exemplifies my hands-on experience with LLM-powered development tools
-          and agentic coding workflows mentioned in my qualifications. The full
-          source code is available on
+          Built with AI-assisted development using Claude Code and Astro. Source code available on
           <a
             href="https://github.com/mbazos/resume"
             target="_blank"
@@ -868,12 +790,91 @@ const currentDuration = calculateDuration("2025-10-01");
 
 <style>
   @media print {
+    /* Force light mode colors for print */
     body {
-      @apply bg-white text-black;
+      background: white !important;
+      color: #111827 !important;
     }
 
-    .print\:hidden {
+    /* Hide interactive elements */
+    .print\:hidden,
+    button,
+    [id="theme-toggle"],
+    [id="download-pdf"] {
       display: none !important;
+    }
+
+    /* Optimize spacing for print */
+    .max-w-4xl {
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 0.5rem !important;
+    }
+
+    main {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    /* Prevent page breaks inside sections */
+    section,
+    .border-l-2,
+    ul li {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Ensure proper colors */
+    h1, h2, h3, h4 {
+      color: #111827 !important;
+    }
+
+    .text-orange-600,
+    .dark\:text-orange-400 {
+      color: #ea580c !important;
+    }
+
+    .text-gray-600,
+    .dark\:text-gray-400 {
+      color: #4b5563 !important;
+    }
+
+    .text-gray-700,
+    .dark\:text-gray-300 {
+      color: #374151 !important;
+    }
+
+    .bg-gray-50,
+    .dark\:bg-gray-800 {
+      background-color: #f9fafb !important;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .border-blue-600,
+    .dark\:border-blue-400 {
+      border-color: #2563eb !important;
+    }
+
+    .border-gray-200,
+    .dark\:border-gray-700 {
+      border-color: #e5e7eb !important;
+    }
+
+    /* Ensure links are styled */
+    a {
+      color: #ea580c !important;
+      text-decoration: none !important;
+    }
+
+    /* Reduce margins for better PDF fit */
+    section {
+      margin-bottom: 1.5rem !important;
+    }
+
+    /* Tighter spacing for lists */
+    ul {
+      margin-bottom: 0.75rem !important;
     }
   }
 </style>

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 
 test('generate PDF from resume page', async ({ page }) => {
   // Navigate to the resume page
@@ -13,11 +13,16 @@ test('generate PDF from resume page', async ({ page }) => {
     localStorage.setItem('theme', 'light');
   });
 
-  // Generate PDF
+  // Wait a bit more to ensure fonts are loaded
+  await page.waitForTimeout(1000);
+
+  // Generate PDF with optimal settings
   await page.pdf({
     path: 'michael_bazos_resume.pdf',
     format: 'Letter',
     printBackground: true,
+    preferCSSPageSize: true,
+    scale: 1.0,
     margin: {
       top: '0.5in',
       right: '0.5in',
