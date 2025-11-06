@@ -816,95 +816,110 @@ import DownloadButton from "../components/DownloadButton.astro";
       padding-bottom: 0 !important;
     }
 
-    /* Prevent page breaks inside sections */
-    section,
-    .border-l-2,
+    /* Page break control - allow sections to break but keep jobs together */
+    section {
+      page-break-inside: auto;  /* Allow sections to break across pages */
+    }
+
+    /* Keep individual job entries together */
+    .border-l-2 {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Prevent orphaned headings */
+    h2 {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    /* Keep list items together */
     ul li {
       page-break-inside: avoid;
       break-inside: avoid;
     }
 
-    /* Aggressive spacing control for PDF */
+    /* Ultra-aggressive spacing control for PDF */
     section {
-      margin-bottom: 1rem !important;
+      margin-bottom: 0.75rem !important;
       margin-top: 0 !important;
     }
 
     /* Reduce header section margin */
     header {
-      margin-bottom: 1rem !important;
+      margin-bottom: 0.75rem !important;
     }
 
     /* Control section heading spacing */
     h2 {
-      margin-bottom: 0.5rem !important;
+      margin-bottom: 0.4rem !important;
       margin-top: 0 !important;
     }
 
     h3 {
-      margin-bottom: 0.25rem !important;
+      margin-bottom: 0.2rem !important;
       margin-top: 0 !important;
     }
 
-    /* Tighter list spacing */
+    /* Very tight list spacing */
     ul {
       margin-top: 0 !important;
-      margin-bottom: 0.5rem !important;
+      margin-bottom: 0.3rem !important;
     }
 
-    /* Override space-y utilities for lists in print */
+    /* Override space-y utilities for minimal list spacing */
     .space-y-2 > * + * {
-      margin-top: 0.35rem !important;
+      margin-top: 0.25rem !important;
     }
 
     .space-y-4 > * + * {
-      margin-top: 0.75rem !important;
+      margin-top: 0.5rem !important;
     }
 
-    /* Reduce paragraph spacing */
+    /* Minimal paragraph spacing */
     p {
       margin-top: 0 !important;
-      margin-bottom: 0.5rem !important;
+      margin-bottom: 0.3rem !important;
     }
 
-    /* Tighter spacing for job entries */
+    /* Minimal spacing for job entries */
     .mb-6 {
-      margin-bottom: 1rem !important;
+      margin-bottom: 0.75rem !important;
     }
 
     .mb-8 {
-      margin-bottom: 1rem !important;
+      margin-bottom: 0.75rem !important;
     }
 
     .mb-4 {
-      margin-bottom: 0.5rem !important;
+      margin-bottom: 0.4rem !important;
     }
 
     .mb-3 {
-      margin-bottom: 0.35rem !important;
+      margin-bottom: 0.25rem !important;
     }
 
     .mb-2 {
-      margin-bottom: 0.25rem !important;
+      margin-bottom: 0.2rem !important;
     }
 
     /* Reduce padding for sections */
     .p-6 {
-      padding: 0.75rem !important;
+      padding: 0.6rem !important;
     }
 
     /* Reduce padding for bordered elements */
     .pl-4 {
-      padding-left: 0.75rem !important;
+      padding-left: 0.6rem !important;
     }
 
-    /* Control gap in flex containers */
+    /* Minimal gap in flex containers */
     .gap-4 {
-      gap: 0.5rem !important;
+      gap: 0.4rem !important;
     }
 
     .gap-2 {
-      gap: 0.35rem !important;
+      gap: 0.25rem !important;
     }
 
     /* Ensure proper colors */
@@ -961,30 +976,40 @@ import DownloadButton from "../components/DownloadButton.astro";
       padding-bottom: 0.75rem !important;
     }
 
-    /* Fine-tune font sizes for better PDF fit */
+    /* Compact font sizes and line heights for PDF */
     .text-4xl {
-      font-size: 1.875rem !important;
-      line-height: 2.25rem !important;
-    }
-
-    .text-2xl {
-      font-size: 1.5rem !important;
+      font-size: 1.75rem !important;
       line-height: 2rem !important;
     }
 
-    .text-xl {
-      font-size: 1.125rem !important;
+    .text-2xl {
+      font-size: 1.375rem !important;
       line-height: 1.75rem !important;
     }
 
-    .text-lg {
-      font-size: 1rem !important;
+    .text-xl {
+      font-size: 1.05rem !important;
       line-height: 1.5rem !important;
     }
 
+    .text-lg {
+      font-size: 0.95rem !important;
+      line-height: 1.35rem !important;
+    }
+
     .text-sm {
-      font-size: 0.875rem !important;
-      line-height: 1.25rem !important;
+      font-size: 0.8rem !important;
+      line-height: 1.15rem !important;
+    }
+
+    /* Reduce base text line height */
+    body {
+      line-height: 1.4 !important;
+    }
+
+    /* Tighter leading for paragraphs */
+    .leading-relaxed {
+      line-height: 1.45 !important;
     }
   }
 </style>

@@ -19,19 +19,19 @@ test('generate PDF from resume page', async ({ page }) => {
   // Wait for any animations to complete
   await page.waitForLoadState('domcontentloaded');
 
-  // Generate PDF with optimal settings for spacing
+  // Generate PDF with compact settings to maximize content per page
   await page.pdf({
     path: 'michael_bazos_resume.pdf',
     format: 'Letter',
     printBackground: true,
     preferCSSPageSize: true,
-    scale: 0.95,  // Slightly reduce scale for better spacing
+    scale: 0.92,  // Reduce scale for more compact layout
     displayHeaderFooter: false,
     margin: {
-      top: '0.4in',
-      right: '0.5in',
-      bottom: '0.4in',
-      left: '0.5in',
+      top: '0.35in',
+      right: '0.45in',
+      bottom: '0.35in',
+      left: '0.45in',
     },
   });
 
