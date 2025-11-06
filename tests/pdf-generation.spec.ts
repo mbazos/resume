@@ -13,20 +13,24 @@ test('generate PDF from resume page', async ({ page }) => {
     localStorage.setItem('theme', 'light');
   });
 
-  // Wait a bit more to ensure fonts are loaded
-  await page.waitForTimeout(1000);
+  // Wait for fonts to load
+  await page.waitForTimeout(1500);
 
-  // Generate PDF with optimal settings
+  // Wait for any animations to complete
+  await page.waitForLoadState('domcontentloaded');
+
+  // Generate PDF with optimal settings for spacing
   await page.pdf({
     path: 'michael_bazos_resume.pdf',
     format: 'Letter',
     printBackground: true,
     preferCSSPageSize: true,
-    scale: 1.0,
+    scale: 0.95,  // Slightly reduce scale for better spacing
+    displayHeaderFooter: false,
     margin: {
-      top: '0.5in',
+      top: '0.4in',
       right: '0.5in',
-      bottom: '0.5in',
+      bottom: '0.4in',
       left: '0.5in',
     },
   });
