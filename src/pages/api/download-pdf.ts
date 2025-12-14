@@ -1,6 +1,14 @@
 import type { APIRoute } from "astro";
 import { chromium } from "playwright";
 
+function getFormattedDate(): string {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const year = String(now.getFullYear()).slice(-2);
+  return `${month}_${day}_${year}`;
+}
+
 export const GET: APIRoute = async ({ url }) => {
   try {
     const browser = await chromium.launch();
@@ -19,13 +27,15 @@ export const GET: APIRoute = async ({ url }) => {
 
     await browser.close();
 
+    // Generate filename with current date
+    const filename = `Michael_Bazos_Resume_${getFormattedDate()}.pdf`;
+
     // Convert Buffer to Uint8Array for proper Response handling
     return new Response(new Uint8Array(pdf), {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition":
-          'attachment; filename="Michael_Bazos_Resume.pdf"',
+        "Content-Disposition": `attachment; filename="${filename}"`,
       },
     });
   } catch (error) {

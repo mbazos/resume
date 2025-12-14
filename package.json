@@ -5,9 +5,12 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "npm run test && astro check && astro build",
+    "build:only": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "test": "playwright test tests/resume.spec.ts",
+    "test:all": "playwright test",
     "generate-pdf": "playwright test --project=chromium pdf-generation.spec.ts"
   },
   "dependencies": {

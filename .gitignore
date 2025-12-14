@@ -23,6 +23,8 @@ pnpm-debug.log*
 
 .astro/
 
+.claude
+
 # test results
 test-results/
 playwright-report/
