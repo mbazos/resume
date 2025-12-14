@@ -1,6 +1,8 @@
 import type { APIRoute } from "astro";
 import { chromium } from "playwright";
 
+export const prerender = false;
+
 function getFormattedDate(): string {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, "0");
