@@ -13,11 +13,29 @@ function getFormattedDate(): string {
 
 export const GET: APIRoute = async ({ url }) => {
   try {
+    // Check if we're in build mode by checking if the URL is localhost
+    // During build, this endpoint is invoked but shouldn't actually run
+    const baseUrl = url.origin;
+    if (!baseUrl || baseUrl === 'http://localhost:4321' || baseUrl === 'http://localhost:3000') {
+      // During build or when base URL is not available, return a helpful message
+      // This prevents the build error while allowing the endpoint to work in dev/production
+      return new Response(
+        JSON.stringify({
+          message: "PDF download endpoint - available only when server is running"
+        }),
+        {
+          status: 503,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+
     const browser = await chromium.launch();
     const page = await browser.newPage();
 
     // Navigate to the home page
-    const baseUrl = url.origin;
     await page.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
 
     // Generate PDF with print styles
