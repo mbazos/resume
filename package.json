@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && node scripts/generate-pdf.mjs",
     "build:only": "astro check && astro build",
+    "generate-pdf": "node scripts/generate-pdf.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
