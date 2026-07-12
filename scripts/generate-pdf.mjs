@@ -88,7 +88,7 @@ try {
     format: 'A4',
     scale: 0.8,
     printBackground: true,
-    margin: { top: '12mm', bottom: '12mm', left: '0mm', right: '0mm' },
+    margin: { top: '8mm', bottom: '8mm', left: '0mm', right: '0mm' },
   });
 
   await writeFile(outputFile, pdf);
