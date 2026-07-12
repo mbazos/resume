@@ -59,19 +59,21 @@ npm run preview
 
 ### Generate PDF
 
-To generate a PDF version of the resume:
+The PDF is generated automatically at build time by `scripts/generate-pdf.mjs`, which renders the built site in headless Chromium using the website's normal screen styles (light theme, floating buttons hidden) so the PDF looks identical to the website. It is written to `dist/Michael_Bazos_Resume.pdf`, and the site's PDF button is a plain link to that file.
 
-1. First, build the site:
-   ```bash
-   npm run build
-   ```
+```bash
+npm run build          # astro check + astro build + PDF generation
+npm run build:only     # build without the PDF step
+npm run generate-pdf   # regenerate the PDF from an existing dist/ build
+```
 
-2. Then generate the PDF:
-   ```bash
-   npm run generate-pdf
-   ```
+Requires a Playwright Chromium browser (one-time setup):
 
-The PDF will be saved as `michael_bazos_resume.pdf` in the project root.
+```bash
+npx playwright install chromium
+```
+
+Note: in `npm run dev` the PDF link 404s until you've run a build, since the file is a build artifact.
 
 ## Project Structure
 
