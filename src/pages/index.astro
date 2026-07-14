@@ -2,6 +2,25 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import DownloadButton from "../components/DownloadButton.astro";
+import { resume } from "../data/resume";
+
+const [firstName, ...restOfName] = resume.name.split(" ");
+const lastName = restOfName.join(" ");
+
+// Descriptions are stored as plain text (they're also fed to Gemini by the
+// /tailor feature); known URLs are turned back into links for the page.
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+function linkify(text: string): string {
+  return escapeHtml(text).replace(
+    /\bevfc1\.com\b/,
+    '<a href="https://evfc1.com" target="_blank" rel="noopener noreferrer" class="text-orange-600 dark:text-orange-400 hover:underline">evfc1.com</a>'
+  );
+}
 ---
 
 <BaseLayout
@@ -15,17 +34,18 @@ import DownloadButton from "../components/DownloadButton.astro";
     <!-- Header -->
     <header class="mb-8 text-center">
       <h1 class="text-4xl font-bold mb-2">
-        Michael <span class="text-orange-600 dark:text-orange-400">Bazos</span>
+        {firstName}
+        <span class="text-orange-600 dark:text-orange-400">{lastName}</span>
       </h1>
       <p class="text-xl text-gray-600 dark:text-gray-400 mb-4">
-        Software Engineer, Architect & Engineering Manager
+        {resume.tagline}
       </p>
 
       <div
         class="flex flex-wrap justify-center gap-4 text-sm text-gray-600 dark:text-gray-400"
       >
         <a
-          href="mailto:mbazos@gmail.com"
+          href={`mailto:${resume.contact.email}`}
           class="hover:text-orange-600 dark:hover:text-orange-400 flex items-center gap-1"
         >
           <svg
@@ -42,10 +62,10 @@ import DownloadButton from "../components/DownloadButton.astro";
               d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
             ></path>
           </svg>
-          mbazos@gmail.com
+          {resume.contact.email}
         </a>
         <a
-          href="https://github.com/mbazos/"
+          href={resume.contact.github}
           target="_blank"
           rel="noopener noreferrer"
           class="hover:text-orange-600 dark:hover:text-orange-400 flex items-center gap-1"
@@ -63,7 +83,7 @@ import DownloadButton from "../components/DownloadButton.astro";
           github
         </a>
         <a
-          href="https://www.linkedin.com/in/mbazos"
+          href={resume.contact.linkedin}
           target="_blank"
           rel="noopener noreferrer"
           class="hover:text-orange-600 dark:hover:text-orange-400 flex items-center gap-1"
@@ -95,7 +115,7 @@ import DownloadButton from "../components/DownloadButton.astro";
               d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
             ></path>
           </svg>
-          (413) 695-6074
+          {resume.contact.phone}
         </span>
         <span class="flex items-center gap-1">
           <svg
@@ -117,7 +137,7 @@ import DownloadButton from "../components/DownloadButton.astro";
               stroke-width="2"
               d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
           </svg>
-          Easton, CT (United States)
+          {resume.contact.location}
         </span>
       </div>
     </header>
@@ -125,7 +145,7 @@ import DownloadButton from "../components/DownloadButton.astro";
     <!-- Introduction -->
     <section class="mb-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
       <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-        Engineering leader with 20 years of experience spanning hands-on architecture and team management &mdash; 12+ years at Priceline growing from Senior Engineer to Distinguished Engineer and Senior Director. Deep Java/JVM and cloud expertise, with a track record of building high-volume travel APIs and leading the engineering teams behind them.
+        {resume.introduction}
       </p>
     </section>
 
@@ -135,36 +155,14 @@ import DownloadButton from "../components/DownloadButton.astro";
         Summary of Qualifications
       </h2>
       <ul class="space-y-2 text-gray-700 dark:text-gray-300">
-        <li class="flex gap-2">
-          <span class="text-orange-600 dark:text-orange-400">•</span>
-          <span
-            >20 years building and operating high-volume, revenue-critical APIs in Java and the JVM ecosystem</span
-          >
-        </li>
-        <li class="flex gap-2">
-          <span class="text-orange-600 dark:text-orange-400">•</span>
-          <span
-            >Rare IC-to-executive range: Distinguished Engineer technical credibility combined with Senior Director and Development Manager leadership experience</span
-          >
-        </li>
-        <li class="flex gap-2">
-          <span class="text-orange-600 dark:text-orange-400">•</span>
-          <span
-            >Led Priceline's enterprise cloud migration to GCP, training 15+ teams across four language stacks</span
-          >
-        </li>
-        <li class="flex gap-2">
-          <span class="text-orange-600 dark:text-orange-400">•</span>
-          <span
-            >Lead the JVM developer group at Priceline while mentoring engineers and authoring architectural documentation org-wide</span
-          >
-        </li>
-        <li class="flex gap-2">
-          <span class="text-orange-600 dark:text-orange-400">•</span>
-          <span
-            >Early adopter and champion of AI-assisted development practices across engineering teams</span
-          >
-        </li>
+        {
+          resume.qualifications.map((qualification) => (
+            <li class="flex gap-2">
+              <span class="text-orange-600 dark:text-orange-400">•</span>
+              <span>{qualification}</span>
+            </li>
+          ))
+        }
       </ul>
     </section>
 
@@ -174,22 +172,14 @@ import DownloadButton from "../components/DownloadButton.astro";
         Technical Skills
       </h2>
       <ul class="space-y-2 text-gray-700 dark:text-gray-300">
-        <li>
-          <span class="font-semibold">Languages &amp; Frameworks:</span>
-          Java, Spring Boot / Spring Framework, Node.js, Python, Android
-        </li>
-        <li>
-          <span class="font-semibold">Cloud &amp; Infrastructure:</span>
-          GCP, Docker, Kubernetes, Helm
-        </li>
-        <li>
-          <span class="font-semibold">Data &amp; Messaging:</span>
-          Kafka, Redis, Cassandra, Oracle DB, MySQL, Lucene
-        </li>
-        <li>
-          <span class="font-semibold">Practices:</span>
-          REST API design, high-volume distributed systems, AI-assisted development (Cursor, Gemini CLI, Cody), technical mentorship
-        </li>
+        {
+          resume.skills.map((group) => (
+            <li>
+              <span class="font-semibold">{group.category}:</span>
+              {group.items}
+            </li>
+          ))
+        }
       </ul>
     </section>
 
@@ -199,342 +189,37 @@ import DownloadButton from "../components/DownloadButton.astro";
         Experience
       </h2>
 
-      <!-- Mobility Search & Book Development Manager -->
-      <div class="mb-6 border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-        <div class="flex justify-between items-start mb-2">
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Mobility Search & Book Development Manager
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400">
-              Priceline.com, Norwalk, CT
+      {
+        resume.experience.map((job) => (
+          <div class="mb-6 border-l-2 border-blue-600 dark:border-blue-400 pl-4">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                  {job.title}
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400">
+                  {job.company}, {job.location}
+                </p>
+              </div>
+              <span class="text-gray-600 dark:text-gray-400 text-sm">
+                {job.dates}
+              </span>
+            </div>
+            <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
+              {job.bullets.map((bullet) => (
+                <li class="flex gap-2">
+                  <span class="text-orange-600 dark:text-orange-400">•</span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              <span class="font-semibold">Relevant Technologies:</span>{" "}
+              {job.technologies}
             </p>
           </div>
-          <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >October 2025 - Present</span
-          >
-        </div>
-        <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Lead a 9-engineer team spanning Android, iOS, web, and Java
-              backend &mdash; responsible for all rental car and ground transfer
-              products at Priceline</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Drive the team's approach to scaling projects across all
-              platforms, reducing tech debt, and taking full advantage of
-              LLM/AI development tools</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Established cross-platform learning so engineers can cover for
-              one another and step outside their specialty, removing
-              single-person dependencies</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Contribute hands-on code off the critical path to build trust
-              with new team members and stay close to the challenges in the
-              codebase</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Actively participate in Priceline's co-op program, training and
-              managing co-op students alongside other direct reports</span
-            >
-          </li>
-        </ul>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          <span class="font-semibold">Relevant Technologies:</span> Java, Node.js,
-          Android, iOS, GCP, Atlassian Suite, DX, New Relic, Splunk, ClickHouse
-        </p>
-      </div>
-
-      <!-- Senior Director Rental Car Services -->
-      <div class="mb-6 border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-        <div class="flex justify-between items-start mb-2">
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Senior Director Rental Car Services
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400">
-              Priceline.com, Norwalk, CT
-            </p>
-          </div>
-          <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >March 2024 - October 2025 (1 year 7 months)</span
-          >
-        </div>
-        <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Managed the engineering team responsible for core rental car APIs supporting Priceline.com and affiliate network; partnered with business leadership to define technical strategy</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Championed AI-powered development tools and led an internal AI hackathon that produced customer-facing projects for review summarization and policy analysis</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Introduced machine-learning-based ranking of rental car search results to surface higher-converting offers</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Implemented supplier-data caching that reduced redundant supplier calls and sped up search responses</span
-            >
-          </li>
-        </ul>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          <span class="font-semibold">Relevant Technologies:</span> Docker, Kubernetes,
-          Java, Node.js, Kafka, Redis, Cassandra, GCP, Gemini CLI, Cody, Cursor
-        </p>
-      </div>
-
-      <!-- Distinguished Engineer -->
-      <div class="mb-6 border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-        <div class="flex justify-between items-start mb-2">
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Distinguished Engineer Rental Car Services
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400">
-              Priceline.com, Norwalk, CT
-            </p>
-          </div>
-          <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >March 2018 - March 2024 (6 years)</span
-          >
-        </div>
-        <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Selected for the core group that drove Priceline's company-wide cloud migration &mdash; worked directly with engineering teams across the company to break down cloud concepts and chart migration paths for new and legacy applications</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Evolved Priceline's shared internal Java components so application teams could move to the cloud with minimal friction</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Trained 15+ teams on cloud migration across Java, JS, PHP, and Go</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Redesigned the rental car supplier connection architecture &mdash; a design still carrying production traffic today</span
-            >
-          </li>
-        </ul>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          <span class="font-semibold">Relevant Technologies:</span> Helm Charts,
-          Docker, Kubernetes, Java, Node.js, Kafka, Redis, Cassandra, GCP
-        </p>
-      </div>
-
-      <!-- Principal Engineer -->
-      <div class="mb-6 border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-        <div class="flex justify-between items-start mb-2">
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Principal Engineer Rental Car Services
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400">
-              Priceline.com, Norwalk, CT
-            </p>
-          </div>
-          <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >March 2016 - March 2018 (2 years)</span
-          >
-        </div>
-        <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Technical leadership role on the Rental Car team as individual contributor</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Led API consolidation, supplier/affiliate onboarding, and internationalization of the rental car path</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Collaborated with business, product, and tech teams to prioritize work and drive growth</span
-            >
-          </li>
-        </ul>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          <span class="font-semibold">Relevant Technologies:</span> REST, Java,
-          Spring Framework, Spring Boot, Oracle DB, MySQL, Cassandra, Lucene
-        </p>
-      </div>
-
-      <!-- Senior Software Engineer Priceline -->
-      <div class="mb-6 border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-        <div class="flex justify-between items-start mb-2">
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Senior Software Engineer Rental Car Services
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400">
-              Priceline.com, Norwalk, CT
-            </p>
-          </div>
-          <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >April 2013 - March 2016 (3 years)</span
-          >
-        </div>
-        <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Built and modernized high-volume foundational APIs for rental car services</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Delivered 20%+ quarterly business growth through impactful projects</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Implemented in-memory caching resulting in 25%+ reduction in API response times</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Won Priceline's first hackathon with innovative dual-map rental car search UI</span
-            >
-          </li>
-        </ul>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          <span class="font-semibold">Relevant Technologies:</span> REST, Java,
-          Spring Framework, Spring Boot, Oracle DB, MySQL, Cassandra, Lucene
-        </p>
-      </div>
-
-      <!-- Senior Application Developer SE&I -->
-      <div class="mb-6 border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-        <div class="flex justify-between items-start mb-2">
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Senior Application Developer SE&I
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400">
-              Cigna, Bloomfield, CT
-            </p>
-          </div>
-          <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >February 2011 - April 2013 (2 years)</span
-          >
-        </div>
-        <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Built Cigna's first native Android app with Python/Django backend; designed enterprise Java components used organization-wide</span
-            >
-          </li>
-        </ul>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          <span class="font-semibold">Relevant Technologies:</span> Android, Python,
-          Django, Java, J2EE, Spring Framework, IBM WebSphere
-        </p>
-      </div>
-
-      <!-- Senior Application Developer EAS -->
-      <div class="mb-6 border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-        <div class="flex justify-between items-start mb-2">
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Senior Application Developer EAS
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400">
-              Cigna, Bloomfield, CT
-            </p>
-          </div>
-          <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >January 2008 - February 2011 (3 years)</span
-          >
-        </div>
-        <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Major contributor to Cigna's web services initiative powering call center and website</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Reduced MIPS utilization by 70% through performance optimizations; received company award</span
-            >
-          </li>
-        </ul>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          <span class="font-semibold">Relevant Technologies:</span> Java, J2EE, Spring
-          Framework, IBM WebSphere, SOA, SOAP, DB2, Oracle DB
-        </p>
-      </div>
-
-      <!-- Application Developer SSO -->
-      <div class="mb-6 border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-        <div class="flex justify-between items-start mb-2">
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Application Developer Single Sign On (SSO)
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400">
-              Cigna, Bloomfield, CT
-            </p>
-          </div>
-          <span class="text-gray-600 dark:text-gray-400 text-sm"
-            >January 2006 - January 2008 (2 years)</span
-          >
-        </div>
-        <ul class="space-y-2 mb-3 text-gray-700 dark:text-gray-300">
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Developed and maintained Cigna's enterprise SSO services for authentication and authorization</span
-            >
-          </li>
-        </ul>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          <span class="font-semibold">Relevant Technologies:</span> Java, J2EE, LDAP,
-          Spring Framework, Hibernate, IBM WebSphere
-        </p>
-      </div>
+        ))
+      }
     </section>
 
     <!-- Education -->
@@ -542,42 +227,33 @@ import DownloadButton from "../components/DownloadButton.astro";
       <h2 class="text-2xl font-bold mb-4 text-orange-600 dark:text-orange-400">
         Education
       </h2>
-      <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-        <div class="flex justify-between items-start mb-2">
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              B.S. Computer Science
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400">
-              Sacred Heart University, Fairfield, CT
-            </p>
+      {
+        resume.education.map((entry) => (
+          <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                  {entry.degree}
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400">
+                  {entry.school}, {entry.location}
+                </p>
+              </div>
+              <span class="text-gray-600 dark:text-gray-400 text-sm">
+                {entry.dates}
+              </span>
+            </div>
+            <ul class="space-y-1 text-gray-700 dark:text-gray-300">
+              {entry.bullets.map((bullet) => (
+                <li class="flex gap-2">
+                  <span class="text-orange-600 dark:text-orange-400">•</span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <span class="text-gray-600 dark:text-gray-400 text-sm">2002 - 2006</span
-          >
-        </div>
-        <ul class="space-y-1 text-gray-700 dark:text-gray-300">
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span>Minor in Mathematics</span>
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >Upsilon Pi Epsilon Computer Science Honor Society Spring 2006</span
-            >
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span>SHU Football NCAA Division I–AA/FCS 2002-2005</span>
-          </li>
-          <li class="flex gap-2">
-            <span class="text-orange-600 dark:text-orange-400">•</span>
-            <span
-              >2004 Northeast Conference Fall Academic Honor Roll (SHU Football)</span
-            >
-          </li>
-        </ul>
-      </div>
+        ))
+      }
     </section>
 
     <!-- Personal Projects -->
@@ -587,91 +263,22 @@ import DownloadButton from "../components/DownloadButton.astro";
       </h2>
 
       <div class="space-y-4">
-        <!-- Volunteer Firefighter -->
-        <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Volunteer Firefighter <span
-              class="text-sm font-normal text-gray-600 dark:text-gray-400"
-              >(2022-Present)</span
-            >
-          </h3>
-          <p class="text-gray-700 dark:text-gray-300 mb-2">
-            Active volunteer firefighter certified in Fire Fighter I, HazMat Operations, and HazMat Awareness.
-            Lead the technology committee managing Microsoft 365 deployment, servers, and network infrastructure.
-            Built and maintain the department website at <a
-              href="https://evfc1.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-orange-600 dark:text-orange-400 hover:underline"
-              >evfc1.com</a>.
-          </p>
-        </div>
-
-        <!-- Suadeo -->
-        <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Suadeo <span
-              class="text-sm font-normal text-gray-600 dark:text-gray-400"
-              >(2020-Present)</span
-            >
-          </h3>
-          <p class="text-gray-700 dark:text-gray-300 mb-2">
-            Social network app for TV & movies built with React Native, Node.js, and Neo4j.
-          </p>
-        </div>
-
-        <!-- Multi-Platform Mobile Kids Game -->
-        <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Multi-Platform Mobile Kids Game <span
-              class="text-sm font-normal text-gray-600 dark:text-gray-400"
-              >(2014-2017)</span
-            >
-          </h3>
-          <p class="text-gray-700 dark:text-gray-300">
-            Built a cross-platform memory game using Java, OpenGL, and custom graphics/animation systems.
-          </p>
-        </div>
-
-        <!-- Web Mail Scraper Outlook -->
-        <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            OWA Mail for Android <span
-              class="text-sm font-normal text-gray-600 dark:text-gray-400"
-              >(2015-2017)</span
-            >
-          </h3>
-          <p class="text-gray-700 dark:text-gray-300">
-            Native Android email client for Outlook Web Access accounts. 100k+ downloads.
-          </p>
-        </div>
-
-        <!-- Binary Clock Wallpaper -->
-        <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Binary Clock Wallpaper <span
-              class="text-sm font-normal text-gray-600 dark:text-gray-400"
-              >(2012)</span
-            >
-          </h3>
-          <p class="text-gray-700 dark:text-gray-300 mb-2">
-            A simple, efficient live wallpaper for Android. My first app
-            published to the Play Store.
-          </p>
-        </div>
-
-        <!-- Disposable Camera App -->
-        <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Disposable Camera App <span
-              class="text-sm font-normal text-gray-600 dark:text-gray-400"
-              >(2012)</span
-            >
-          </h3>
-          <p class="text-gray-700 dark:text-gray-300">
-            Wedding photo app with instant uploads and geofencing to validate venue proximity.
-          </p>
-        </div>
+        {
+          resume.projects.map((project) => (
+            <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                {project.name}{" "}
+                <span class="text-sm font-normal text-gray-600 dark:text-gray-400">
+                  ({project.years})
+                </span>
+              </h3>
+              <p
+                class="text-gray-700 dark:text-gray-300"
+                set:html={linkify(project.description)}
+              />
+            </div>
+          ))
+        }
       </div>
     </section>
 

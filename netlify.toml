@@ -4,3 +4,7 @@
   # lands in ~/.cache/ms-playwright, which Netlify persists between builds.
   command = "npx playwright install chromium && npm run build"
   publish = "dist"
+
+[build.environment]
+  # @google/genai requires Node >= 20.
+  NODE_VERSION = "20"
