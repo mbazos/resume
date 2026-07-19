@@ -1,0 +1,273 @@
+---
+export const prerender = false;
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ThemeToggle from "../../components/ThemeToggle.astro";
+import { GEMINI_MODELS, DEFAULT_GEMINI_MODEL } from "../../lib/tailor-types";
+---
+
+<BaseLayout
+  title="Resume Tailor"
+  description="Private resume tailoring tool"
+  noindex
+>
+  <ThemeToggle />
+
+  <main class="max-w-3xl mx-auto px-6 py-12">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">
+        Resume <span class="text-orange-600 dark:text-orange-400">Tailor</span>
+      </h1>
+      <form method="POST" action="/api/auth/logout">
+        <button
+          type="submit"
+          class="text-sm text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400"
+        >
+          Log out
+        </button>
+      </form>
+    </div>
+
+    <p class="text-gray-600 dark:text-gray-400 mb-8">
+      Paste a job posting URL and fetch it, or paste the job description text
+      directly. Gemini tailors your resume to the job — using only what's on
+      your real resume.
+    </p>
+
+    <!-- JD URL fetch -->
+    <div class="mb-6">
+      <label class="block text-sm font-semibold mb-1" for="jd-url">
+        Job posting URL
+      </label>
+      <div class="flex gap-2">
+        <input
+          id="jd-url"
+          type="url"
+          placeholder="https://..."
+          class="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
+        <button
+          id="fetch-btn"
+          type="button"
+          class="rounded-lg bg-gray-700 hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-500 text-white font-semibold px-4 py-2 transition-colors disabled:opacity-50"
+        >
+          Fetch
+        </button>
+      </div>
+      <p id="fetch-error" class="hidden mt-2 text-sm text-red-600 dark:text-red-400"></p>
+    </div>
+
+    <!-- JD text -->
+    <div class="mb-6">
+      <label class="block text-sm font-semibold mb-1" for="jd-text">
+        Job description text
+      </label>
+      <textarea
+        id="jd-text"
+        rows="12"
+        placeholder="Fetched text appears here — or paste the job description yourself."
+        class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+      ></textarea>
+    </div>
+
+    <!-- Model + generate -->
+    <div class="flex flex-wrap items-end gap-4 mb-4">
+      <label class="block">
+        <span class="text-sm font-semibold">Gemini model</span>
+        <select
+          id="model-select"
+          class="mt-1 block rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+        >
+          {
+            GEMINI_MODELS.map((model) => (
+              <option value={model} selected={model === DEFAULT_GEMINI_MODEL}>
+                {model}
+              </option>
+            ))
+          }
+        </select>
+      </label>
+      <button
+        id="generate-btn"
+        type="button"
+        class="rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-2 transition-colors disabled:opacity-50"
+      >
+        Generate tailored resume
+      </button>
+    </div>
+    <p id="generate-error" class="hidden mb-4 text-sm text-red-600 dark:text-red-400"></p>
+    <p id="generate-status" class="hidden mb-4 text-sm text-gray-600 dark:text-gray-400"></p>
+
+    <!-- History -->
+    <section class="mt-12">
+      <h2 class="text-xl font-bold mb-4 text-orange-600 dark:text-orange-400">
+        History
+      </h2>
+      <p id="history-empty" class="text-sm text-gray-500 dark:text-gray-400">
+        No tailored resumes yet. History is stored in this browser only.
+      </p>
+      <ul id="history-list" class="space-y-3"></ul>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  import {
+    GEMINI_MODELS,
+    DEFAULT_GEMINI_MODEL,
+    HISTORY_STORAGE_KEY,
+    type HistoryEntry,
+  } from "../../lib/tailor-types";
+
+  const MODEL_STORAGE_KEY = "tailor-model";
+
+  const urlInput = document.getElementById("jd-url") as HTMLInputElement;
+  const fetchBtn = document.getElementById("fetch-btn") as HTMLButtonElement;
+  const fetchError = document.getElementById("fetch-error") as HTMLElement;
+  const jdText = document.getElementById("jd-text") as HTMLTextAreaElement;
+  const modelSelect = document.getElementById("model-select") as HTMLSelectElement;
+  const generateBtn = document.getElementById("generate-btn") as HTMLButtonElement;
+  const generateError = document.getElementById("generate-error") as HTMLElement;
+  const generateStatus = document.getElementById("generate-status") as HTMLElement;
+  const historyList = document.getElementById("history-list") as HTMLElement;
+  const historyEmpty = document.getElementById("history-empty") as HTMLElement;
+
+  // --- Model selection (remember last choice) ---
+  const savedModel = localStorage.getItem(MODEL_STORAGE_KEY);
+  modelSelect.value =
+    savedModel && (GEMINI_MODELS as readonly string[]).includes(savedModel)
+      ? savedModel
+      : DEFAULT_GEMINI_MODEL;
+  modelSelect.addEventListener("change", () => {
+    localStorage.setItem(MODEL_STORAGE_KEY, modelSelect.value);
+  });
+
+  // --- History (localStorage) ---
+  function loadHistory(): HistoryEntry[] {
+    try {
+      const raw = localStorage.getItem(HISTORY_STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveHistory(entries: HistoryEntry[]) {
+    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(entries));
+  }
+
+  function renderHistory() {
+    const entries = loadHistory();
+    historyEmpty.classList.toggle("hidden", entries.length > 0);
+    historyList.innerHTML = "";
+    for (const entry of entries) {
+      const li = document.createElement("li");
+      li.className =
+        "flex justify-between items-center gap-4 border-l-2 border-blue-600 dark:border-blue-400 pl-4 py-1";
+
+      const info = document.createElement("div");
+      const title = document.createElement("p");
+      title.className = "font-semibold";
+      title.textContent = `${entry.jobTitle} — ${entry.company}`;
+      const meta = document.createElement("p");
+      meta.className = "text-sm text-gray-500 dark:text-gray-400";
+      meta.textContent = `${new Date(entry.createdAt).toLocaleString()} · ${entry.model}`;
+      info.append(title, meta);
+
+      const actions = document.createElement("div");
+      actions.className = "flex gap-3 shrink-0";
+      const view = document.createElement("a");
+      view.href = `/tailor/view?id=${encodeURIComponent(entry.id)}`;
+      view.className =
+        "text-sm font-semibold text-orange-600 dark:text-orange-400 hover:underline";
+      view.textContent = "View";
+      const del = document.createElement("button");
+      del.className =
+        "text-sm text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400";
+      del.textContent = "Delete";
+      del.addEventListener("click", () => {
+        saveHistory(loadHistory().filter((e) => e.id !== entry.id));
+        renderHistory();
+      });
+      actions.append(view, del);
+
+      li.append(info, actions);
+      historyList.append(li);
+    }
+  }
+
+  renderHistory();
+
+  // --- Fetch JD from URL ---
+  fetchBtn.addEventListener("click", async () => {
+    fetchError.classList.add("hidden");
+    const url = urlInput.value.trim();
+    if (!url) {
+      fetchError.textContent = "Enter a URL first.";
+      fetchError.classList.remove("hidden");
+      return;
+    }
+    fetchBtn.disabled = true;
+    fetchBtn.textContent = "Fetching…";
+    try {
+      const res = await fetch("/api/fetch-jd", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Fetch failed.");
+      jdText.value = data.text;
+    } catch (err) {
+      fetchError.textContent =
+        err instanceof Error ? err.message : "Fetch failed.";
+      fetchError.classList.remove("hidden");
+    } finally {
+      fetchBtn.disabled = false;
+      fetchBtn.textContent = "Fetch";
+    }
+  });
+
+  // --- Generate ---
+  generateBtn.addEventListener("click", async () => {
+    generateError.classList.add("hidden");
+    const jobDescription = jdText.value.trim();
+    if (jobDescription.length < 100) {
+      generateError.textContent =
+        "Paste or fetch a job description first (at least 100 characters).";
+      generateError.classList.remove("hidden");
+      return;
+    }
+    generateBtn.disabled = true;
+    generateStatus.textContent = `Tailoring with ${modelSelect.value}… this can take up to a minute.`;
+    generateStatus.classList.remove("hidden");
+    try {
+      const res = await fetch("/api/tailor", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jobDescription, model: modelSelect.value }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Generation failed.");
+
+      const entry: HistoryEntry = {
+        id: crypto.randomUUID(),
+        createdAt: data.generatedAt,
+        company: data.tailored.company,
+        jobTitle: data.tailored.jobTitle,
+        model: data.model,
+        resume: data.tailored,
+        warnings: data.warnings ?? [],
+      };
+      saveHistory([entry, ...loadHistory()]);
+      window.location.href = `/tailor/view?id=${encodeURIComponent(entry.id)}`;
+    } catch (err) {
+      generateError.textContent =
+        err instanceof Error ? err.message : "Generation failed.";
+      generateError.classList.remove("hidden");
+      generateStatus.classList.add("hidden");
+      generateBtn.disabled = false;
+    }
+  });
+</script>

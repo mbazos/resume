@@ -1,0 +1,47 @@
+---
+export const prerender = false;
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const showError = Astro.url.searchParams.get("error") === "1";
+---
+
+<BaseLayout
+  title="Login — Resume Tailor"
+  description="Private resume tailoring tool"
+  noindex
+>
+  <main class="max-w-sm mx-auto px-6 py-24">
+    <h1 class="text-2xl font-bold mb-6 text-center">
+      Resume <span class="text-orange-600 dark:text-orange-400">Tailor</span>
+    </h1>
+
+    {
+      showError && (
+        <p class="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-sm">
+          Incorrect password. Try again.
+        </p>
+      )
+    }
+
+    <form method="POST" action="/api/auth/login" class="space-y-4">
+      <label class="block">
+        <span class="text-sm text-gray-600 dark:text-gray-400">Password</span>
+        <input
+          type="password"
+          name="password"
+          required
+          autofocus
+          autocomplete="current-password"
+          class="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
+      </label>
+      <button
+        type="submit"
+        class="w-full rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 transition-colors"
+      >
+        Log in
+      </button>
+    </form>
+  </main>
+</BaseLayout>
