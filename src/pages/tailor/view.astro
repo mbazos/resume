@@ -24,6 +24,13 @@ import ThemeToggle from "../../components/ThemeToggle.astro";
       ← Back
     </a>
     <button
+      id="details-btn"
+      type="button"
+      class="rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 transition-colors"
+    >
+      Details
+    </button>
+    <button
       id="download-btn"
       type="button"
       class="rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold px-4 py-2 transition-colors"
@@ -31,6 +38,33 @@ import ThemeToggle from "../../components/ThemeToggle.astro";
       Download PDF
     </button>
   </div>
+
+  <dialog
+    id="details-modal"
+    class="no-print rounded-xl p-0 w-full max-w-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-xl backdrop:bg-black/50"
+  >
+    <div class="p-6">
+      <div class="flex justify-between items-start mb-4">
+        <h2 class="text-xl font-bold text-orange-600 dark:text-orange-400">Tailoring details</h2>
+        <form method="dialog">
+          <button
+            type="submit"
+            aria-label="Close"
+            class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-2xl leading-none"
+          >
+            &times;
+          </button>
+        </form>
+      </div>
+      <p id="details-role" class="font-semibold mb-1"></p>
+      <p id="details-meta" class="text-sm text-gray-500 dark:text-gray-400 mb-4"></p>
+      <h3 class="font-semibold mb-2">What was changed and why</h3>
+      <ul id="details-notes" class="space-y-2 text-sm text-gray-700 dark:text-gray-300 list-disc pl-5"></ul>
+      <p id="details-no-notes" class="hidden text-sm text-gray-500 dark:text-gray-400 italic">
+        No explanation was recorded for this resume — it was generated before change notes existed.
+      </p>
+    </div>
+  </dialog>
 
   <div id="warnings" class="no-print hidden max-w-3xl mx-auto px-6 pt-20">
     <div
@@ -56,6 +90,8 @@ import ThemeToggle from "../../components/ThemeToggle.astro";
   const root = document.getElementById("resume-root") as HTMLElement;
   const notFound = document.getElementById("not-found") as HTMLElement;
   const downloadBtn = document.getElementById("download-btn") as HTMLButtonElement;
+  const detailsBtn = document.getElementById("details-btn") as HTMLButtonElement;
+  const detailsModal = document.getElementById("details-modal") as HTMLDialogElement;
   const warningsBox = document.getElementById("warnings") as HTMLElement;
   const warningsList = document.getElementById("warnings-list") as HTMLElement;
 
@@ -72,6 +108,7 @@ import ThemeToggle from "../../components/ThemeToggle.astro";
   if (!entry) {
     notFound.classList.remove("hidden");
     downloadBtn.disabled = true;
+    detailsBtn.disabled = true;
   } else {
     root.insertAdjacentHTML("afterbegin", renderTailoredResume(entry));
 
@@ -83,6 +120,35 @@ import ThemeToggle from "../../components/ThemeToggle.astro";
       }
       warningsBox.classList.remove("hidden");
     }
+
+    const date = new Date(entry.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    document.getElementById("details-role")!.textContent =
+      `${entry.jobTitle} at ${entry.company}`;
+    document.getElementById("details-meta")!.textContent =
+      `Generated ${date} · ${entry.model}`;
+
+    const notesList = document.getElementById("details-notes") as HTMLElement;
+    const notes = entry.resume.changeNotes ?? [];
+    if (notes.length) {
+      for (const note of notes) {
+        const li = document.createElement("li");
+        li.textContent = note;
+        notesList.append(li);
+      }
+    } else {
+      notesList.classList.add("hidden");
+      document.getElementById("details-no-notes")!.classList.remove("hidden");
+    }
+
+    detailsBtn.addEventListener("click", () => detailsModal.showModal());
+    detailsModal.addEventListener("click", (event) => {
+      // Clicking the backdrop hits the <dialog> element itself, not its content.
+      if (event.target === detailsModal) detailsModal.close();
+    });
 
     downloadBtn.addEventListener("click", () => {
       const original = document.title;
@@ -130,6 +196,11 @@ import ThemeToggle from "../../components/ThemeToggle.astro";
 
     /* Tighten vertical rhythm so a max-budget resume (4 jobs × 3 bullets)
        still fits a single Letter page. */
+    #resume-root p,
+    #resume-root li {
+      line-height: 1.4 !important;
+    }
+
     #resume-root header {
       margin-bottom: 0.75rem !important;
     }

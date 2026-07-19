@@ -5,14 +5,14 @@
  */
 
 export const GEMINI_MODELS = [
-  'gemini-2.5-flash',
-  'gemini-2.5-pro',
-  'gemini-2.5-flash-lite',
+  'gemini-3.5-flash',
+  'gemini-3.1-pro-preview',
+  'gemini-3.1-flash-lite',
 ] as const;
 
 export type GeminiModel = (typeof GEMINI_MODELS)[number];
 
-export const DEFAULT_GEMINI_MODEL: GeminiModel = 'gemini-2.5-flash';
+export const DEFAULT_GEMINI_MODEL: GeminiModel = 'gemini-3.5-flash';
 
 export interface TailoredSkillGroup {
   category: string;
@@ -36,6 +36,8 @@ export interface TailoredResume {
   skills: TailoredSkillGroup[];
   experience: TailoredExperience[];
   education: string[];
+  /** Optional: history entries generated before this field existed lack it. */
+  changeNotes?: string[];
 }
 
 export interface HistoryEntry {

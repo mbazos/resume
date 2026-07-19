@@ -30,7 +30,7 @@ function friendlyError(err: unknown): string {
     return 'Gemini blocked this request (safety filters). Try editing the job description text.';
   }
   if (/timeout|timed out|deadline/i.test(message)) {
-    return 'The request timed out. Try again, or use the faster gemini-2.5-flash model.';
+    return 'The request timed out. Try again, or use a faster flash model.';
   }
   return message;
 }

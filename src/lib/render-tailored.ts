@@ -70,11 +70,6 @@ export function renderTailoredResume(entry: HistoryEntry): string {
   const { resume: tailored } = entry;
   const [firstName, ...restOfName] = resume.name.split(' ');
   const lastName = restOfName.join(' ');
-  const date = new Date(entry.createdAt).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
 
   return `
     <header class="mb-6 text-center">
@@ -89,9 +84,6 @@ export function renderTailoredResume(entry: HistoryEntry): string {
         <a href="${escapeHtml(resume.contact.linkedin)}" target="_blank" rel="noopener noreferrer" class="hover:text-orange-600 dark:hover:text-orange-400">linkedin</a>
         <a href="${escapeHtml(resume.contact.github)}" target="_blank" rel="noopener noreferrer" class="hover:text-orange-600 dark:hover:text-orange-400">github</a>
       </div>
-      <p class="text-sm text-gray-500 dark:text-gray-400 italic">
-        Tailored for ${escapeHtml(tailored.jobTitle)} at ${escapeHtml(tailored.company)} — ${escapeHtml(date)}
-      </p>
     </header>
 
     <section class="mb-5 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">

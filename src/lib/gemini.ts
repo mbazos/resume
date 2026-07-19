@@ -61,6 +61,12 @@ const responseSchema = {
       items: { type: Type.STRING },
       description: 'Education lines, e.g. "B.S. Computer Science — Sacred Heart University"',
     },
+    changeNotes: {
+      type: Type.ARRAY,
+      items: { type: Type.STRING },
+      description:
+        '3-6 one-sentence notes explaining the most significant tailoring decisions — what was emphasized, omitted, reordered, or rephrased, and why, tied to the job description',
+    },
   },
   required: [
     'company',
@@ -70,6 +76,7 @@ const responseSchema = {
     'skills',
     'experience',
     'education',
+    'changeNotes',
   ],
 };
 
@@ -97,7 +104,10 @@ SINGLE-PAGE BUDGET — the output must fit one printed page:
 - education: 1 line per degree.
 - Prefer OMITTING less-relevant content over compressing everything. A focused resume beats a crowded one.
 
-Tailoring guidance: emphasize the resume content that best matches the job description's requirements, mirror the job description's terminology only where the resume genuinely supports it, and lead with the strongest matches.`;
+Tailoring guidance: emphasize the resume content that best matches the job description's requirements, mirror the job description's terminology only where the resume genuinely supports it, and lead with the strongest matches.
+
+CHANGE NOTES:
+Fill "changeNotes" with 3-6 one-sentence notes explaining your most significant tailoring decisions — what you emphasized, omitted, reordered, or rephrased, and why, tied to specific requirements in the job description. These notes are metadata for the resume owner and are not part of the resume itself.`;
 }
 
 export interface TailorResult {

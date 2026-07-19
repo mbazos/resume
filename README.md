@@ -85,8 +85,8 @@ A private, password-protected tool that tailors the resume to a specific job des
 
 1. Log in at `/tailor/login` (single shared password, no accounts).
 2. Paste a job posting URL and click **Fetch** — the server extracts the text. If the site blocks scraping, paste the job description text directly.
-3. Pick a Gemini model (`gemini-2.5-flash` default and fastest, `gemini-2.5-pro` highest quality, `gemini-2.5-flash-lite` cheapest; your last choice is remembered) and click **Generate**.
-4. The tailored resume opens at `/tailor/view` styled like the main resume, with a header showing the job title, company, and date. **Download PDF** prints it to a single-page PDF via the browser.
+3. Pick a Gemini model (`gemini-3.5-flash` default, `gemini-3.1-pro-preview` highest quality — needs a paid-tier API key, `gemini-3.1-flash-lite` cheapest; your last choice is remembered) and click **Generate**.
+4. The tailored resume opens at `/tailor/view` styled like the main resume. A **Details** button opens a modal with the job title, company, generation date, model, and Gemini's notes on what was changed or omitted and why (none of which appears in the printed resume). **Download PDF** prints it to a single-page PDF via the browser.
 
 Gemini may only select, reorder, trim, or rephrase content from `src/data/resume.ts` — never invent anything. The server additionally verifies every returned experience entry against the real resume and drops (with a warning) anything that doesn't match.
 
