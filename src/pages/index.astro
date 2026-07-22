@@ -21,12 +21,37 @@ function linkify(text: string): string {
     '<a href="https://evfc1.com" target="_blank" rel="noopener noreferrer" class="text-orange-600 dark:text-orange-400 hover:underline">evfc1.com</a>'
   );
 }
+
+const currentJob = resume.experience[0];
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: resume.name,
+  jobTitle: currentJob?.title,
+  description: resume.introduction,
+  email: `mailto:${resume.contact.email}`,
+  telephone: resume.contact.phone,
+  address: resume.contact.location,
+  url: Astro.site?.toString(),
+  sameAs: [resume.contact.github, resume.contact.linkedin],
+  worksFor: currentJob
+    ? {
+        "@type": "Organization",
+        name: currentJob.company,
+      }
+    : undefined,
+  alumniOf: resume.education.map((entry) => ({
+    "@type": "EducationalOrganization",
+    name: entry.school,
+  })),
+};
 ---
 
 <BaseLayout
   title="Michael Bazos - Software Engineer, Architect & Engineering Manager"
   description="Resume of Michael Bazos, an engineering leader with 20 years of experience spanning hands-on architecture and team management. Deep Java/JVM and cloud expertise, with a track record of building high-volume travel APIs and leading the engineering teams behind them."
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)} />
   <DownloadButton />
   <ThemeToggle />
 
