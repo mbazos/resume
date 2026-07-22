@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /tailor
+Disallow: /api
+
+Sitemap: https://michaelbazos.com/sitemap-index.xml

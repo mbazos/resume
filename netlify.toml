@@ -8,3 +8,10 @@
 [build.environment]
   # @google/genai requires Node >= 20.
   NODE_VERSION = "20"
+
+[[headers]]
+  # Astro fingerprints these filenames by content hash, so they're safe to
+  # cache forever — a new build produces new filenames instead of new content.
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
