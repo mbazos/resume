@@ -281,6 +281,39 @@ const personSchema = {
       }
     </section>
 
+    <!-- Open Source Contributions -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-4 text-orange-600 dark:text-orange-400">
+        Open Source Contributions
+      </h2>
+
+      <div class="space-y-4">
+        {
+          resume.openSource.map((project) => (
+            <div class="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                {project.name}
+              </h3>
+              <p class="text-gray-700 dark:text-gray-300">{project.description}</p>
+              {project.contribution && (
+                <p class="text-gray-700 dark:text-gray-300">
+                  <span class="font-semibold">Contribution:</span> {project.contribution}
+                </p>
+              )}
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm text-orange-600 dark:text-orange-400 hover:underline break-all"
+              >
+                {project.url}
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
     <!-- Personal Projects -->
     <section class="mb-8">
       <h2 class="text-2xl font-bold mb-4 text-orange-600 dark:text-orange-400">
