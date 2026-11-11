@@ -33,6 +33,14 @@ export interface ProjectEntry {
   description: string;
 }
 
+export interface OpenSourceEntry {
+  name: string;
+  description: string;
+  /** One line on what I did for the project; omitted when there is nothing to say. */
+  contribution?: string;
+  url: string;
+}
+
 export interface ResumeData {
   name: string;
   tagline: string;
@@ -48,6 +56,7 @@ export interface ResumeData {
   skills: SkillGroup[];
   experience: ExperienceEntry[];
   education: EducationEntry[];
+  openSource: OpenSourceEntry[];
   projects: ProjectEntry[];
 }
 
@@ -204,6 +213,51 @@ export const resume: ResumeData = {
         'SHU Football NCAA Division I–AA/FCS 2002-2005',
         '2004 Northeast Conference Fall Academic Honor Roll (SHU Football)',
       ],
+    },
+  ],
+  openSource: [
+    {
+      name: 'Spring Framework',
+      description:
+        'Core application framework for the Java platform, providing dependency injection, web, and data-access support.',
+      contribution: 'Reported issues and proposed changes, including a proposal to deprecate the remoting technologies.',
+      url: 'https://github.com/spring-projects/spring-framework',
+    },
+    {
+      name: 'Spring Boot',
+      description:
+        'Opinionated framework for building production-grade, stand-alone Spring applications with minimal configuration.',
+      contribution: 'Reported issues and proposed enhancements, including actuator health and startup-time metrics.',
+      url: 'https://github.com/spring-projects/spring-boot',
+    },
+    {
+      name: 'Spring Integration',
+      description:
+        'Extension of the Spring programming model that implements the Enterprise Integration Patterns for messaging-driven applications.',
+      contribution: 'Contributed an enhancement to the XSLT transformer support.',
+      url: 'https://github.com/spring-projects/spring-integration',
+    },
+    {
+      name: 'Apache Tomcat',
+      description:
+        'Open source implementation of the Jakarta Servlet, Pages, and WebSocket specifications; a widely used Java web server.',
+      contribution:
+        'Reported a bug (BZ 63879) about an unnecessary stack trace in debug logging on socket close and suggested the fix; resolved in Tomcat 9.0.29.',
+      url: 'https://github.com/apache/tomcat',
+    },
+    {
+      name: 'libGDX',
+      description:
+        'Cross-platform Java game development framework targeting desktop, Android, iOS, and HTML5.',
+      contribution: 'Contributed a texture unpacking tool to the project.',
+      url: 'https://github.com/libgdx/libgdx',
+    },
+    {
+      name: 'ShedLock',
+      description:
+        'Distributed lock library that ensures scheduled tasks run at most once at the same time across multiple instances.',
+      contribution: 'Contributed a Google Cloud Storage (GCS) lock provider.',
+      url: 'https://github.com/lukas-krecan/ShedLock',
     },
   ],
   projects: [
